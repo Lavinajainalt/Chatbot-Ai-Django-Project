@@ -26,5 +26,9 @@ urlpatterns = [
     path('app/', include('app.urls')),
     path('Mainpagetwo/', views.Mainpagetwo, name='Mainpagetwo'),
     path('Mainthree/', views.Mainthree, name='Mainthree'),
+    path('Mainfour/', views.Mainfour, name='Mainfour'),
+    path('Mainfive/', views.Mainfive, name='Mainfive'),
+    path('Mainsix/', views.Mainsix, name='Mainsix'),
+    path('Chat/', include('Chat.urls')),
 
 ]

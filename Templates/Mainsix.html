@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Analytics Dashboard</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
+    .dashboard-section {
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(129, 140, 248, 0.5);
+    }
+
+    .section-subtitle {
+      color: #94a3b8;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(129, 140, 248, 0.1), rgba(192, 132, 252, 0.1));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(129, 140, 248, 0.3);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-card h3 {
+      font-size: 1.8rem;
+      color: #f8fafc;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .stat-card h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, #818cf8, #c084fc);
+      border-radius: 3px;
+    }
+
+    .stat-card p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      height: 200px;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 0.75rem;
+      position: relative;
+    }
+
+    .bar {
+      flex: 1;
+      position: relative;
+      height: 0;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      border-radius: 0.5rem 0.5rem 0 0;
+      transition: height 0.6s ease-in-out;
+      cursor: pointer;
+    }
+
+    .bar.active {
+      height: var(--value);
+    }
+
+    .bar::after {
+      content: attr(title);
+      position: absolute;
+      bottom: -1.5rem;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+    }
+
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="dashboard-section">
+    <div data-aos="fade-up">
+      <h2 class="section-title">AI Analytics Dashboard</h2>
+      <p class="section-subtitle">Real-time performance metrics and insights</p>
+
+      <div class="stats-container">
+        <!-- Chart Card -->
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+          <h3>Performance Metrics</h3>
+          <div class="bar-chart">
+            <div class="bar" style="--value: 30%;" title="Jan"></div>
+            <div class="bar" style="--value: 40%;" title="Feb"></div>
+            <div class="bar" style="--value: 50%;" title="Mar"></div>
+            <div class="bar" style="--value: 60%;" title="Apr"></div>
+            <div class="bar" style="--value: 70%;" title="May"></div>
+            <div class="bar" style="--value: 85%;" title="Jun"></div>
+            <div class="bar" style="--value: 95%;" title="Jul"></div>
+          </div>
+          <p>Total Processing: <span class="highlight">15,800+</span></p>
+        </div>
+
+        <!-- Status Card -->
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+          <h3>System Status</h3>
+          <p>Response Time: <span class="highlight">0.8s</span></p>
+          <p>Accuracy Rate: <span class="highlight">98.5%</span></p>
+          <p>System Uptime: <span class="highlight">99.9%</span></p>
+          <p>Active Processes: <span class="highlight">3,200</span></p>
+        </div>
+
+        <!-- Operations List -->
+        <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+          <h3>Top Operations</h3>
+          <ul>
+            <li>Data Processing</li>
+            <li>Pattern Recognition</li>
+            <li>Predictive Analysis</li>
+            <li>Neural Processing</li>
+            <li>Deep Learning Tasks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Add animation to bars when they are visible
+    const bars = document.querySelectorAll('.bar');
+    const animateBars = () => {
+      bars.forEach(bar => {
+        const rect = bar.getBoundingClientRect();
+        if (rect.top < window.innerHeight && !bar.classList.contains('active')) {
+          bar.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', animateBars);
+    window.addEventListener('load', animateBars);
+  </script>
+</body>
+</html>

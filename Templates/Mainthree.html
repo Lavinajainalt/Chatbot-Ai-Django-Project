@@ -17,7 +17,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        #particles-js {
+        /* Unique ID for this particles canvas */
+        #particles-js-testimonial {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -197,7 +198,8 @@
     </style>
 </head>
 <body>
-    <div id="particles-js"></div>
+    <!-- Unique canvas for this page -->
+    <div id="particles-js-testimonial"></div>
     <section class="testimonial-section">
         <h2 class="section-title">What Our Clients Say</h2>
         <div class="testimonial-container">
@@ -229,7 +231,7 @@
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
-    <!-- Add this new script for testimonial rotation -->
+    <!-- Testimonial Rotation Script -->
     <script>
         // Testimonial data
         const testimonials = [
@@ -297,8 +299,8 @@
         // Start the rotation
         setInterval(rotateTestimonials, 5000); // Changes every 5 seconds
 
-        // Initialize particles.js
-        particlesJS('particles-js',
+        // Initialize particles.js for this page
+        particlesJS('particles-js-testimonial',
             {
                 "particles": {
                     "number": {
@@ -331,12 +333,7 @@
                     },
                     "move": {
                         "enable": true,
-                        "speed": 6,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false
+                        "speed": 4
                     }
                 },
                 "interactivity": {
@@ -349,14 +346,11 @@
                         "onclick": {
                             "enable": true,
                             "mode": "push"
-                        },
-                        "resize": true
+                        }
                     }
                 },
                 "retina_detect": true
             });
     </script>
-</body>
-
 </body>
 </html>

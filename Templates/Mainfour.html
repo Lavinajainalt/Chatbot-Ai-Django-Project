@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="stats-section">
+  <div class="stat-box">
+    <h2 class="count" data-target="15432">0</h2>
+    <p>Queries Answered</p>
+  </div>
+  <div class="stat-box">
+    <h2 class="count" data-target="7864">0</h2>
+    <p>Features Explored</p>
+  </div>
+</section>
+
+<style>
+    .stats-section {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin: 4rem 0;
+      flex-wrap: wrap;
+    }
+  
+    .stat-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.1);
+      backdrop-filter: blur(8px);
+      min-width: 250px;
+    }
+  
+    .stat-box h2 {
+      font-size: 3rem;
+      color: #818cf8;
+      margin: 0;
+    }
+  
+    .stat-box p {
+      font-size: 1.2rem;
+      color: #cbd5e1;
+      margin-top: 0.5rem;
+    }
+  </style>
+  <script>
+    function animateStats() {
+      const counters = document.querySelectorAll('.count');
+      const speed = 200;
+  
+      counters.forEach(counter => {
+        const updateCount = () => {
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+          const increment = target / speed;
+  
+          if (count < target) {
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount, 10);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+  
+        updateCount();
+      });
+    }
+  
+    // Use IntersectionObserver to trigger animation on scroll
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateStats();
+          observer.disconnect(); // Run once
+        }
+      });
+    }, { threshold: 0.6 });
+  
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+      observer.observe(statsSection);
+    }
+  </script>
+  
+    
+</body>
+</html>

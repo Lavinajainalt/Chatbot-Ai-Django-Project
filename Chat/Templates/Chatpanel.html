@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Assistant</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #34495e;
+      --accent-color: #3498db;
+      --text-primary: #ecf0f1;
+      --text-secondary: #bdc3c7;
+      --success-color: #2ecc71;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --background-gradient: linear-gradient(135deg, #1a2634 0%, #232f3e 100%);
+    }
+
+    body.light-mode {
+      --primary-color: #ffffff;
+      --secondary-color: #f0f0f0;
+      --accent-color: #007bff;
+      --text-primary: #2c3e50;
+      --text-secondary: #555;
+      --success-color: #28a745;
+      --background-gradient: linear-gradient(135deg, #e0e0e0, #ffffff);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--background-gradient);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+    }
+
+    #chat-container {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.5rem;
+      height: calc(100vh - 200px);
+    }
+
+    #chat-box, #history-panel {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .msg {
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user {
+      background: rgba(52, 152, 219, 0.1);
+      margin-left: 20%;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .bot {
+      background: rgba(46, 204, 113, 0.1);
+      margin-right: 20%;
+      border-left: 4px solid var(--success-color);
+    }
+
+    .input-container {
+      margin-top: 1.5rem;
+    }
+
+    #message {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: var(--border-radius);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .button-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 0.75rem 1.2rem;
+      border: none;
+      border-radius: var(--border-radius);
+      background: var(--accent-color);
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Toggle Switch Styling */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #4caf50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    #voice-status {
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      #chat-container {
+        grid-template-columns: 1fr;
+      }
+
+      #history-panel {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>🤖 AI Assistant</h1>
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <div id="chat-container">
+      <div id="chat-box"></div>
+      <div id="history-panel">
+        <h3>Recent Conversations</h3>
+        <div id="history-content"></div>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <input type="text" id="message" placeholder="Type your message..." />
+      <div class="button-group">
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+        <button id="voice-btn" onclick="startVoiceInput()">🎤 Voice</button>
+        <!-- Attach Button -->
+<button onclick="document.getElementById('file-input').click()">📎 Attach</button>
+<input type="file" id="file-input" style="display: none;" onchange="handleFileUpload(event)">
+
+
+        <!-- Voice Reply Toggle -->
+        <label class="switch">
+          <input type="checkbox" id="voice-toggle" checked>
+          <span class="slider"></span>
+        </label>
+        <span id="voice-status">Voice Reply: ON</span>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const messageInput = document.getElementById("message");
+    let voiceReplyEnabled = true;
+
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      appendMessage("You", message, "user");
+      messageInput.value = "";
+
+      fetch('/Chat/api/chat/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        appendMessage("Gemini", data.reply, "bot");
+        if (voiceReplyEnabled) speakReply(data.reply);
+        updateHistory(message, data.reply);
+      });
+    }
+
+    function appendMessage(sender, text, cssClass) {
+      chatBox.innerHTML += `<div class="msg ${cssClass}"><strong>${sender}:</strong> ${text}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function updateHistory(userMessage, botReply) {
+      const historyContent = document.getElementById("history-content");
+      historyContent.innerHTML += `<div><strong>You:</strong> ${userMessage}</div><div><strong>Gemini:</strong> ${botReply}</div>`;
+    }
+
+    function startVoiceInput() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        messageInput.value = event.results[0][0].transcript;
+        sendMessage();
+      };
+    }
+
+    function speakReply(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.voice = speechSynthesis.getVoices().find(v => v.name.includes("Google") || v.name.includes("UK"));
+      speechSynthesis.speak(utterance);
+    }
+
+    // Voice Toggle
+    document.getElementById("voice-toggle").addEventListener("change", function () {
+      voiceReplyEnabled = this.checked;
+      document.getElementById("voice-status").textContent = `Voice Reply: ${voiceReplyEnabled ? "ON" : "OFF"}`;
+    });
+
+    // Theme Toggle
+    document.getElementById("theme-toggle").addEventListener("change", function () {
+      document.body.classList.toggle("light-mode", this.checked);
+    });
+
+    messageInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+    
+      // Show the filename as a user message
+      appendMessage("You", `📎 ${file.name}`, "user");
+      chatBox.scrollTop = chatBox.scrollHeight;
+    
+      // If you want to send content, read the file
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const fileContent = e.target.result;
+    
+        typingIndicator.style.display = "block";
+    
+        // Send the content as a message to Gemini
+        fetch('/Chat/api/chat/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: fileContent.slice(0, 1000) }) // limiting to 1000 chars for safety
+        })
+        .then(res => res.json())
+        .then(data => {
+          typingIndicator.style.display = "none";
+          appendMessage("Gemini", data.reply, "bot");
+          speakReply(data.reply);
+          chatBox.scrollTop = chatBox.scrollHeight;
+    
+          updateHistory(`📎 ${file.name}`, data.reply);
+        });
+      };
+    
+      // Read file as text (you can adjust for PDF, image, etc.)
+      reader.readAsText(file);
+    }
+    
+  </script>
+</body>
+</html>

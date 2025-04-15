@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Personality Timeline</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+   
+
+    #ai-timeline {
+      padding: 4rem 2rem;
+    }
+
+    .ai-timeline-wrapper {
+      text-align: center;
+    }
+
+    .timeline-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #a5b4fc, #fef08a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-title:hover {
+      background: linear-gradient(135deg, #fef08a, #a5b4fc);
+    }
+
+    .timeline-subtitle {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      opacity: 0.8;
+    }
+
+    .ai-timeline-list {
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .ai-timeline-list::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #818cf8;
+      border-radius: 2px;
+    }
+
+    .ai-timeline-entry {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-left: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .ai-timeline-entry:hover {
+      transform: translateX(5px);
+    }
+
+    .ai-timeline-icon {
+      position: absolute;
+      left: -0.75rem;
+      top: 0.25rem;
+      background: #1e293b;
+      color: #facc15;
+      font-size: 1.5rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid #818cf8;
+      z-index: 1;
+      box-shadow: 0 0 10px rgba(129, 140, 248, 0.2);
+      animation: badgeAnimation 0.8s ease-out;
+    }
+
+    .ai-timeline-content {
+      background: #1e293b;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      text-align: left;
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .ai-timeline-content:hover {
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.4);
+    }
+
+    .ai-timeline-content h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .ai-timeline-content p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 1rem;
+    }
+
+    .ai-timeline-details {
+      display: none;
+      background: #1e293b;
+      border-radius: 0.5rem;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 0 15px rgba(129, 140, 248, 0.3);
+      margin-top: 10px;
+    }
+
+    .hidden { display: none; }
+
+    html { scroll-behavior: smooth; }
+
+    @keyframes badgeAnimation {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- AI Personality Timeline Section -->
+  <section style="background: #0f172a;" id="ai-timeline">
+    <div class="ai-timeline-wrapper" data-aos="fade-up" data-aos-duration="1000">
+      <h2 class="timeline-title">🧠 AI Personality in Action</h2>
+      <p class="timeline-subtitle">From witty to wise — see how your AI adapts!</p>
+
+      <div class="ai-timeline-list">
+        <div class="ai-timeline-entry" data-aos="fade-right" data-aos-delay="100" onclick="toggleDetails(this, 'helpful')">
+          <div class="ai-timeline-icon">🎯</div>
+          <div class="ai-timeline-content">
+            <h3>Helpful</h3>
+            <p>“Sure! Here's a list of healthy snacks under 200 calories.”</p>
+          </div>
+          <div class="ai-timeline-details hidden" id="helpful">
+            <p>Extended Explanation: This personality trait shows the AI's commitment to providing practical and useful advice. It's always ready to assist with clear, actionable suggestions!</p>
+          </div>
+        </div>
+
+        <div class="ai-timeline-entry" data-aos="fade-left" data-aos-delay="200" onclick="toggleDetails(this, 'playful')">
+          <div class="ai-timeline-icon">😂</div>
+          <div class="ai-timeline-content">
+            <h3>Playful</h3>
+            <p>“Why did the robot get a promotion? Because it was outstanding in its field... of data!”</p>
+          </div>
+          <div class="ai-timeline-details hidden" id="playful">
+            <p>Extended Explanation: The AI isn't just about logic and facts — it loves to make people smile with puns and jokes, adding some fun to every conversation!</p>
+          </div>
+        </div>
+
+        <div class="ai-timeline-entry" data-aos="fade-right" data-aos-delay="300" onclick="toggleDetails(this, 'insightful')">
+          <div class="ai-timeline-icon">💡</div>
+          <div class="ai-timeline-content">
+            <h3>Insightful</h3>
+            <p>“Studies show that even 10 minutes of mindfulness a day can reduce stress.”</p>
+          </div>
+          <div class="ai-timeline-details hidden" id="insightful">
+            <p>Extended Explanation: This trait shows the AI’s ability to offer thoughtful insights and useful knowledge, helping users make better, more informed decisions.</p>
+          </div>
+        </div>
+
+        <div class="ai-timeline-entry" data-aos="fade-left" data-aos-delay="400" onclick="toggleDetails(this, 'conversational')">
+          <div class="ai-timeline-icon">🌐</div>
+          <div class="ai-timeline-content">
+            <h3>Conversational</h3>
+            <p>“That’s a great question! Let’s break it down together.”</p>
+          </div>
+          <div class="ai-timeline-details hidden" id="conversational">
+            <p>Extended Explanation: The AI loves engaging in back-and-forth conversations, making discussions feel interactive and natural!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    function toggleDetails(item, id) {
+      const details = document.getElementById(id);
+      details.classList.toggle('hidden');
+
+      const speech = new SpeechSynthesisUtterance(item.querySelector('h3').textContent + ": " + item.querySelector('p').textContent);
+      speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>
