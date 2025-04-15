@@ -1,0 +1,355 @@
+{% extends 'Navbar.html' %}
+
+{% block title %}Welcome – Chatbot AI{% endblock %}
+{% block content %}
+{% load static %}
+
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #030712;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 2rem 6%;
+    position: relative;
+    background: linear-gradient(to bottom right, #030712, #0F172A);
+  }
+
+  .content-wrapper {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .text-content {
+    padding-right: 2rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: 100px;
+    color: #818cf8;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .features-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: auto;
+  }
+
+  .center-image-container {
+    position: absolute;
+    top: 70%;
+    left: 60%;
+    width: 180px;
+    height: 350px;
+    transform: translate(-50%, -150%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border-radius: 50%;
+    padding: 20px;
+    animation: ufoDrop 1.8s ease-out forwards;
+  }
+
+  @keyframes ufoDrop {
+    0% {
+      transform: translate(-50%, -150%);
+      opacity: 0;
+    }
+    50% {
+      transform: translate(-50%, -60%);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .beam-glow {
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    width: 80px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(129,140,248,0.4) 0%, rgba(129,140,248,0.05) 80%);
+    transform: translate(-50%, -50%);
+    filter: blur(20px);
+    opacity: 0.6;
+    z-index: 1;
+    animation: beamFade 2s ease-in-out forwards;
+  }
+
+  @keyframes beamFade {
+    0% { opacity: 0; transform: translate(-50%, -80%) scaleY(0.2); }
+    100% { opacity: 0.6; transform: translate(-50%, -50%) scaleY(1); }
+  }
+
+  .center-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    animation: float 6s ease-in-out infinite, robotGlow 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.3));
+  }
+
+  .feature-card {
+    position: absolute;
+    width: 130px;
+    padding: 0.50rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .feature-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.05);
+    z-index: 3;
+  }
+
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(129, 140, 248, 0.1);
+    border-radius: 8px;
+    margin: auto auto 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-icon i {
+    color: #818cf8;
+  }
+
+  .feature-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    color: #fff;
+  }
+
+  .feature-description {
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  @keyframes robotGlow {
+    0%, 100% {
+      filter: drop-shadow(0 0 10px rgba(129, 140, 248, 0.2));
+    }
+    50% {
+      filter: drop-shadow(0 0 25px rgba(129, 140, 248, 0.6));
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, calc(-50% - 15px)); }
+  }
+
+  @keyframes glowCard {
+    0%, 100% {
+      box-shadow: 0 0 0px rgba(129, 140, 248, 0.0);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(129, 140, 248, 0.7);
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .card-glow {
+    animation: glowCard 1.5s ease-in-out forwards;
+  }
+
+  .glow-dot {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .dot-1 {
+    width: 300px;
+    height: 300px;
+    background: #818cf8;
+    top: 20%;
+    right: 10%;
+  }
+
+  .dot-2 {
+    width: 250px;
+    height: 250px;
+    background: #6366f1;
+    bottom: 20%;
+    left: 10%;
+  }
+
+  @media (max-width: 1200px) {
+    .content-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .features-container {
+      width: 100%;
+      height: auto;
+    }
+
+    .center-image-container {
+      position: relative;
+      transform: none;
+      margin: 2rem auto;
+    }
+
+    .feature-card {
+      position: relative;
+      margin: 1rem auto;
+    }
+  }
+</style>
+
+<section class="hero-section">
+  <div class="glow-dot dot-1"></div>
+  <div class="glow-dot dot-2"></div>
+
+  <div class="content-wrapper">
+    <div class="text-content">
+      <span class="hero-badge">AI-Powered Assistant</span>
+      <h1 class="hero-title">Experience the Future of AI</h1>
+      <p class="hero-subtitle">
+        Unlock the power of artificial intelligence with our advanced chatbot.
+        Get instant answers and explore endless possibilities.
+      </p>
+    </div>
+
+    <div class="features-container" id="features-container">
+      <div class="beam-glow"></div> <!-- UFO beam glow -->
+      <div class="center-image-container">
+        <img src="{% static 'ChatGPT.png' %}" class="center-image" alt="AI Core">
+      </div>
+    </div>
+  </div>
+</section>
+{% include "Mainpagetwo.html" %}
+ {% include "Mainthree.html" %}
+
+<script>
+const features = [
+  { icon: 'fa-comments', title: 'Smart Chat', desc: 'Natural conversations with AI' },
+  { icon: 'fa-microphone', title: 'Voice Search', desc: 'Hands-free commands' },
+  { icon: 'fa-image', title: 'Image Gen', desc: 'AI-generated visuals' },
+  { icon: 'fa-brain', title: 'Analysis', desc: 'Intelligent insights' },
+  { icon: 'fa-book', title: 'Knowledge Base', desc: 'Extensive info access' },
+  { icon: 'fa-shield-alt', title: 'Security', desc: 'Private & encrypted' },
+  { icon: 'fa-robot', title: 'Bot Skills', desc: 'Multi-tasking AI' },
+  { icon: 'fa-cloud', title: 'Cloud Sync', desc: 'Always available' }
+];
+
+const container = document.getElementById('features-container');
+const radius = 250;
+const centerX = 300;
+const centerY = 300;
+
+features.forEach((feature, i) => {
+  const angle = (2 * Math.PI / features.length) * i;
+  const x = centerX + radius * Math.cos(angle) - 75;
+  const y = centerY + radius * Math.sin(angle) - 75;
+
+  const card = document.createElement('div');
+  card.className = 'feature-card';
+  card.style.left = `${x}px`;
+  card.style.top = `${y}px`;
+  card.innerHTML = `
+    <div class="feature-icon"><i class="fas ${feature.icon}"></i></div>
+    <h3 class="feature-title">${feature.title}</h3>
+    <p class="feature-description">${feature.desc}</p>
+  `;
+  container.appendChild(card);
+
+  // Magnetic Hover Effect
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    card.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.05)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'translate(0, 0) scale(1)';
+  });
+});
+</script>
+
+<script>
+const cards = document.querySelectorAll('.feature-card');
+const robot = document.querySelector('.center-image');
+let current = 0;
+
+function glowNextCard() {
+  cards.forEach(card => card.classList.remove('card-glow'));
+  cards[current].classList.add('card-glow');
+
+  robot.classList.remove('pulse-now');
+  void robot.offsetWidth; // Trigger reflow
+  robot.classList.add('pulse-now');
+
+  current = (current + 1) % cards.length;
+}
+
+const style = document.createElement('style');
+style.innerHTML = `
+  .pulse-now {
+    animation: robotGlow 1.5s ease-in-out;
+  }
+`;
+document.head.appendChild(style);
+
+setInterval(glowNextCard, 1000);
+</script>
+
+{% endblock %}

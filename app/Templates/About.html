@@ -1,0 +1,183 @@
+{% extends 'Navbar.html' %}
+
+{% block title %}About Us – Chatbot AI{% endblock %}
+
+{% block content %}
+<canvas id="starfield-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;"></canvas>
+
+<div class="text-white">
+  <!-- Header -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold">About Chatbot AI</h1>
+    <p class="lead text-secondary">
+      Your smart virtual assistant built for instant help, learning, and daily productivity.
+    </p>
+  </div>
+
+  <!-- Mission & Vision -->
+  <div class="row g-5">
+    <div class="col-md-6">
+      <h3 class="text-info">Our Mission</h3>
+      <p class="text-light">
+        To simplify lives through intelligent conversations. We aim to make AI accessible, helpful,
+        and human-like for everyone—anytime, anywhere.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h3 class="text-info">Our Vision</h3>
+      <p class="text-light">
+        A future where AI is your daily co-pilot — helping you learn faster, solve smarter, and communicate better.
+      </p>
+    </div>
+  </div>
+
+  <!-- Why Choose Us with Icons -->
+  <div class="mt-5">
+    <h3 class="text-info">Why Choose Chatbot AI?</h3>
+    <div class="row text-center">
+      <div class="col-md-3 mb-4">
+        <i class="bi bi-chat-dots-fill fs-1 text-info"></i>
+        <p class="text-light">Human-like conversational AI</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <i class="bi bi-lightning-charge-fill fs-2 text-info mb-2"></i>
+        <p class="text-light">Instant, accurate responses</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <i class="bi bi-shield-lock-fill fs-2 text-info mb-2"></i>
+        <p class="text-light">Secure & privacy-first design</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <i class="bi bi-plug-fill fs-2 text-info mb-2"></i>
+        <p class="text-light">Easy integration into platforms</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="mt-5">
+    <h3 class="text-info mb-3">What People Are Saying</h3>
+    <blockquote class="blockquote text-light">
+      <p>
+        "Chatbot AI is like having a 24/7 genius assistant — fast, reliable, and actually helpful!"
+      </p>
+      <footer class="blockquote-footer text-secondary">A Happy User</footer>
+    </blockquote>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="mt-5">
+    <h3 class="text-info mb-3">Powered By</h3>
+    <p class="text-light">
+      ⚙️ Django · Bootstrap · OpenAI API · PostgreSQL · Secure Auth · RESTful APIs
+    </p>
+  </div>
+
+  <!-- Core Values -->
+  <div class="mt-5">
+    <h3 class="text-info mb-3">Our Core Values</h3>
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <h5 class="text-light">Innovation</h5>
+        <p class="text-secondary">We push boundaries to create cutting‑edge AI solutions.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h5 class="text-light">Integrity</h5>
+        <p class="text-secondary">We build trust through transparency and ethical AI practices.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h5 class="text-light">User‑Centric</h5>
+        <p class="text-secondary">We prioritize real human needs and seamless experiences.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h5 class="text-light">Continuous Learning</h5>
+        <p class="text-secondary">We evolve constantly, leveraging feedback and the latest research.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Impact (Animated Counters) -->
+  <div class="mt-5">
+    <h3 class="text-info mb-4">Our Impact</h3>
+    <div class="row text-center">
+      <div class="col-md-3 mb-3">
+        <h4 class="counter" data-target="50000">0</h4>
+        <p class="text-light">Users Served</p>
+      </div>
+      <div class="col-md-3 mb-3">
+        <h4 class="counter" data-target="200000">0</h4>
+        <p class="text-light">Queries Answered</p>
+      </div>
+      <div class="col-md-3 mb-3">
+        <h4 class="counter" data-target="150">0</h4>
+        <p class="text-light">Integrations</p>
+      </div>
+      <div class="col-md-3 mb-3">
+        <h4 class="counter" data-target="99">0</h4>
+        <p class="text-light">% Uptime</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Our Roadmap (Interactive Timeline) -->
+  <div class="mt-5">
+    <h3 class="text-info mb-4">Our Roadmap</h3>
+    <div class="timeline">
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+        <h5>Q1 2024</h5>
+        <p>Concept & Research</p>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+        <h5>Q3 2024</h5>
+        <p>Beta Launch</p>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+        <h5>Q1 2025</h5>
+        <p>Public Release</p>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+        <h5>Q3 2025</h5>
+        <p>Mobile App & New Features</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="mt-5 text-center">
+    <a href="#" class="btn btn-chat btn-lg">
+      <i class="bi bi-arrow-right-circle"></i> Get Started with Chatbot AI
+    </a>
+  </div>
+</div>
+<script>
+    const canvas = document.getElementById('starfield-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+  
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = Array.from({ length: 100 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5
+      }));
+    }
+  
+    function drawStars(e) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        let dx = (e.clientX - canvas.width / 2) * 0.001;
+        let dy = (e.clientY - canvas.height / 2) * 0.001;
+        ctx.beginPath();
+        ctx.arc(star.x + dx, star.y + dy, star.r, 0, 2 * Math.PI);
+        ctx.fillStyle = '#0dcaf0';
+        ctx.fill();
+      });
+    }
+  
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', drawStars);
+    resizeCanvas();
+  </script>
+{% endblock %}

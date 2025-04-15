@@ -1,0 +1,580 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Chatbot AI{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+   <!-- AOS CSS -->
+<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- AOS CSS for scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'Mainpage.css' %}">
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #f1f1f1;
+      font-family: 'Segoe UI', sans-serif;
+      padding-top: 70px; /* Adjust if your navbar height is different */
+    }
+    .navbar-dark-custom {
+      background: linear-gradient(135deg, #1f1f2e, #292940);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+    .navbar-brand {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff !important;
+    }
+    .navbar-nav .nav-link {
+      color: #cfcfcf !important;
+      transition: all 0.3s ease-in-out;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #fff !important;
+      text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    }
+    .btn-chat {
+      background-color: #00c9a7;
+      color: #121212;
+      border-radius: 25px;
+      padding: 6px 18px;
+      font-weight: 500;
+      transition: 0.3s;
+      box-shadow: 0 0 10px rgba(0, 201, 167, 0.5);
+    }
+    .btn-chat:hover {
+      background-color: #00b598;
+      box-shadow: 0 0 15px rgba(0, 201, 167, 0.8);
+    }
+    .dropdown-menu {
+      background-color: #1e1e2e;
+      border: none;
+      border-radius: 10px;
+    }
+    .dropdown-item {
+      color: #ddd;
+    }
+    .dropdown-item:hover {
+      background-color: #2b2b3d;
+      color: #fff;
+    }
+    a { text-decoration: none; }
+
+    /* ── Timeline Styles ───────────────────────────────── */
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #444;
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      position: relative;
+      width: 45%;
+      padding: 1rem;
+      background: #1e1e2e;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .timeline-item:nth-child(odd)  { left: 0; }
+    .timeline-item:nth-child(even) { left: 55%; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00c9a7;
+      border: 4px solid #121212;
+    }
+    .timeline-item:nth-child(odd)::before  { right: -8px; }
+    .timeline-item:nth-child(even)::before { left: -8px;  }
+
+    /* ── Counter Styles ───────────────────────────────── */
+    .counter {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+    .tech-footer {
+    position: relative;
+    background: linear-gradient(180deg, #0a0a12 0%, #1a1a24 100%);
+    color: #fff;
+    padding: 5rem 0 2rem;
+    overflow: hidden;
+}
+
+/* Animated Background */
+.tech-background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.hex-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#00c9a7 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.1;
+    animation: gridFloat 20s linear infinite;
+}
+
+.glow-lines {
+    position: absolute;
+    inset: 0;
+}
+
+.line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, #00c9a7, transparent);
+    height: 1px;
+    width: 100%;
+    opacity: 0.2;
+}
+
+.line-1 { top: 20%; animation: lineFloat 10s linear infinite; }
+.line-2 { top: 50%; animation: lineFloat 15s linear infinite; }
+.line-3 { top: 80%; animation: lineFloat 12s linear infinite; }
+
+@keyframes gridFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-30px); }
+}
+
+@keyframes lineFloat {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Footer Layout */
+.footer-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+/* Brand Styles */
+.footer-brand {
+    padding-right: 2rem;
+}
+
+.brand-logo {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.brand-logo i {
+    font-size: 2.5rem;
+    color: #31D2F2;
+    z-index: 1;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgb(3, 108, 129);
+    border-radius: 50%;
+    animation: ringPulse 2s ease-in-out infinite;
+}
+
+.logo-particles span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #31D2F2;
+    border-radius: 50%;
+    animation: particleFloat 3s ease-in-out infinite;
+}
+
+.logo-particles span:nth-child(1) { top: 0; left: 50%; }
+.logo-particles span:nth-child(2) { top: 50%; right: 0; }
+.logo-particles span:nth-child(3) { bottom: 0; left: 50%; }
+.logo-particles span:nth-child(4) { top: 50%; left: 0; }
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes ringPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+@keyframes particleFloat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+/* Footer Links */
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.links-group h3 {
+    color: #31D2F2;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.links-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hover-link {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.3rem 0;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.hover-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #31D2F2;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.hover-link:hover {
+    color: #31D2F2;
+    transform: translateX(5px);
+}
+
+.hover-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Social Strip */
+.social-strip {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 201, 167, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #31D2F2;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 201, 167, 0.3);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.legal-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background: #31D2F2;
+    border-radius: 50%;
+}
+
+.legal-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+    color:#31D2F2;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .footer-wrapper {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .footer-brand {
+        text-align: center;
+        padding-right: 0;
+    }
+
+    .brand-logo {
+        margin: 0 auto 1.5rem;
+    }
+
+    .social-strip {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .legal-links {
+        justify-content: center;
+    }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Dark Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-dark-custom fixed-top">
+
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="bi bi-robot"></i> Chatbot AI</a>
+      <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'Mainpage'%}"><i class="bi bi-house-door-fill"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'About'%}"><i class="bi bi-info-circle-fill"></i> About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'Contact'%}"><i class="bi bi-envelope-fill"></i> Contact</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-person-circle"></i> Account
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="{% url 'signup' %}">
+                  <i class="bi bi-box-arrow-in-right"></i> Sign In
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <a class="btn btn-chat" href="#"><i class="bi bi-chat-dots"></i> Try Chat</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer class="tech-footer">
+    <!-- Animated Background -->
+    <div class="tech-background">
+      <div class="hex-grid"></div>
+      <div class="glow-lines">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+      </div>
+    </div>
+  
+    <div class="container">
+      <!-- Main Footer Content -->
+      <div class="footer-wrapper">
+        <!-- Brand Column -->
+        <div class="footer-brand" data-aos="fade-right">
+          <div class="brand-logo">
+            <i class="bi bi-robot"></i>
+            <div class="logo-ring"></div>
+            <div class="logo-particles">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <h2>Chatbot AI</h2>
+          <p>Advancing AI Communication</p>
+          <!-- Social Links -->
+          <div class="social-strip">
+            <a href="#" class="social-icon" aria-label="Twitter">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="GitHub">
+              <i class="bi bi-github"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="social-icon" aria-label="Discord">
+              <i class="bi bi-discord"></i>
+            </a>
+          </div>
+        </div>
+  
+        <!-- Quick Links -->
+        <div class="footer-links" data-aos="fade-up">
+          <div class="links-group">
+            <h3>Solutions</h3>
+            <ul>
+              <li><a href="#" class="hover-link">Enterprise AI</a></li>
+              <li><a href="#" class="hover-link">API Access</a></li>
+              <li><a href="#" class="hover-link">Custom Bots</a></li>
+              <li><a href="#" class="hover-link">Integrations</a></li>
+            </ul>
+          </div>
+          <div class="links-group">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="{% url 'About' %}" class="hover-link">About Us</a></li>
+              <li><a href="{% url 'Contact' %}" class="hover-link">Contact</a></li>
+              <li><a href="#" class="hover-link">Careers</a></li>
+              <li><a href="#" class="hover-link">Blog</a></li>
+            </ul>
+          </div>
+          <div class="links-group">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#" class="hover-link">Documentation</a></li>
+              <li><a href="#" class="hover-link">API Reference</a></li>
+              <li><a href="#" class="hover-link">Status</a></li>
+              <li><a href="#" class="hover-link">Security</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="copyright">
+          <span>© 2025 Chatbot AI. All rights reserved.</span>
+        </div>
+        <div class="legal-links">
+          <a href="{% url 'Privacy' %}">Privacy Policy</a>
+          <span class="dot"></span>
+          <a href="{% url 'Terms' %}">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    // Animated Counters
+    const counters = document.querySelectorAll('.counter');
+    const observerOptions = { root: null, threshold: 0.2 };
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = +el.dataset.target;
+        const step = target / 200;
+        const update = () => {
+          const current = +el.innerText;
+          if (current < target) {
+            el.innerText = Math.ceil(current + step);
+            setTimeout(update, 10);
+          } else {
+            el.innerText = target;
+          }
+        };
+        update();
+        obs.unobserve(el);
+      });
+    }, observerOptions);
+    counters.forEach(c => counterObserver.observe(c));
+  </script>
+  <script>
+    const typingEl = document.getElementById("demo-typing");
+    if (typingEl) {
+      const botReply = "Absolutely! I'm here to help you with anything.";
+      let i = 0;
+      const typeIt = () => {
+        if (i < botReply.length) {
+          typingEl.innerHTML += botReply.charAt(i);
+          i++;
+          setTimeout(typeIt, 50);
+        }
+      };
+      typeIt();
+    }
+  
+    // Animated Counters
+    document.querySelectorAll('.counter').forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / 200;
+  
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, 10);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  </script>
+  
+</body>
+</html>

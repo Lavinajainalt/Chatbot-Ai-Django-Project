@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Testimonials</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0f172a;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .testimonial-section {
+            position: relative;
+            z-index: 2;
+            padding: 60px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            background: linear-gradient(45deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #60a5fa33, #a855f733);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-card:hover::before {
+            opacity: 1;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-right: 20px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #60a5fa;
+        }
+
+        .avatar-container::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #60a5fa, #a855f7);
+            z-index: -1;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .user-info {
+            color: #fff;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            color: #60a5fa;
+            font-size: 0.9rem;
+        }
+
+        .quote {
+            position: relative;
+            color: #fff;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            min-height: 80px; /* Add fixed height for quote */
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: #60a5fa;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            opacity: 0.2;
+        }
+
+        .rating {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star {
+            color: #fbbf24;
+            font-size: 1.2rem;
+        }
+
+        /* Add slide animation */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <section class="testimonial-section">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonial-container">
+            <!-- Testimonial Card 1 -->
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="avatar-container">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe" class="avatar" id="testimonial-image">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name" id="testimonial-name">John Doe</h3>
+                        <p class="user-role" id="testimonial-role">Tech Innovator</p>
+                    </div>
+                </div>
+                <p class="quote" id="testimonial-quote">
+                    The AI capabilities have transformed our workflow completely. The accuracy and speed are simply remarkable.
+                </p>
+                <div class="rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Add this new script for testimonial rotation -->
+    <script>
+        // Testimonial data
+        const testimonials = [
+            {
+                image: "https://randomuser.me/api/portraits/men/1.jpg",
+                name: "John Doe",
+                role: "Tech Innovator",
+                quote: "The AI capabilities have transformed our workflow completely. The accuracy and speed are simply remarkable."
+            },
+            {
+                image: "https://randomuser.me/api/portraits/women/2.jpg",
+                name: "Sarah Smith",
+                role: "Digital Strategist",
+                quote: "Implementing this solution has boosted our productivity by 300%. The results speak for themselves."
+            },
+            {
+                image: "https://randomuser.me/api/portraits/men/3.jpg",
+                name: "Mike Johnson",
+                role: "Product Manager",
+                quote: "The customer support and implementation team went above and beyond our expectations."
+            },
+            {
+                image: "https://randomuser.me/api/portraits/women/4.jpg",
+                name: "Emily Chen",
+                role: "AI Research Lead",
+                quote: "The neural network performance exceeded all our benchmarks. Truly revolutionary technology."
+            },
+            {
+                image: "https://randomuser.me/api/portraits/men/5.jpg",
+                name: "David Kumar",
+                role: "CTO",
+                quote: "This AI solution has given us a competitive edge in the market. Outstanding results."
+            }
+        ];
+
+        let currentTestimonialIndex = 0;
+
+        function updateTestimonial(index) {
+            const testimonial = testimonials[index];
+            
+            // Create fade out effect
+            const card = document.querySelector('.testimonial-card');
+            card.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Update content
+                document.getElementById('testimonial-image').src = testimonial.image;
+                document.getElementById('testimonial-name').textContent = testimonial.name;
+                document.getElementById('testimonial-role').textContent = testimonial.role;
+                document.getElementById('testimonial-quote').textContent = testimonial.quote;
+                
+                // Fade in
+                card.style.opacity = '1';
+            }, 500);
+        }
+
+        function rotateTestimonials() {
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+            updateTestimonial(currentTestimonialIndex);
+        }
+
+        // Add transition style for smooth fade effect
+        document.querySelector('.testimonial-card').style.transition = 'opacity 0.5s ease';
+
+        // Start the rotation
+        setInterval(rotateTestimonials, 5000); // Changes every 5 seconds
+
+        // Initialize particles.js
+        particlesJS('particles-js',
+            {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 6,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+    </script>
+</body>
+
+</body>
+</html>
